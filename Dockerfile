@@ -10,7 +10,7 @@ ENV CONDA_DIR /root/anaconda3
 
 RUN /bin/bash /workspace/Anaconda3-2023.03-Linux-x86_64.sh -b -p /root/anaconda3
 
-RUN echo 'export PATH=/root/anaconda3/bin:$PATH' >> ~/.bashrc
+ENV PATH="$PATH:/root/anaconda3/bin"
 
 RUN /root/anaconda3/bin/conda init bash
 
@@ -38,5 +38,8 @@ WORKDIR /workspace/latplan/roswell
 
 RUN ["/bin/bash", "-c", "sh bootstrap && ./configure && make && make install && ros setup"]
 
+RUN ["/bin/bash", "-c", "ros install sbcl-bin/2.3.2"]
 
+RUN ["/bin/bash", "-c", "ros install arrival"]
 
+ENV PATH="$PATH:/root/.roswell/bin"
